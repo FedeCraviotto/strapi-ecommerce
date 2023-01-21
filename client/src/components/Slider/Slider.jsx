@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './slider.scss';
-import slider01 from '../../assets/images/slider/slider01.png';
-import slider02 from '../../assets/images/slider/slider02.png';
-import slider03 from '../../assets/images/slider/slider03.png';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function Slider(){
+    
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const data = [
+        './slider/slider01.png',
+        './slider/slider02.jpg',
+        './slider/slider03.jpg'
+    ];
+
+    const previousSlide = ()=>{
+        setCurrentSlide(currentSlide === 0 ? 2 : (previous) => previous - 1)
+    }
+    const nextSlide = ()=> {
+        setCurrentSlide(currentSlide === 2 ? 0 : (previous) => previous + 1)
+    }
+
     return(
         <div className="slider">
-            <div className="container">
-                <img src={slider01} alt={slider01} />
-                <img src={slider02} alt={slider02} />
-                <img src={slider03} alt={slider03} />
+            <div className="container" style={{transform: `translateX(-${currentSlide * 100}vw)`}}>
+                <img src={data[0]} alt="" />
+                <img src={data[1]} alt="" />
+                <img src={data[2]} alt="" />
             </div>
             <div className="icons">
-                <div className="icon">
+                <div className="icon" onClick={previousSlide}>
                     <ArrowBackIosNewIcon />
                 </div>
-                <div className="icon">
+                <div className="icon" onClick={nextSlide}>
                     <ArrowForwardIosIcon />
                 </div>
             </div>
