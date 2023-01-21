@@ -1,7 +1,8 @@
 import React from "react";
+import './product.scss';
 function Product(){
     return(
-        <div>Single Product</div>
+        <div className="product"></div>
     )
 }
 export default Product;

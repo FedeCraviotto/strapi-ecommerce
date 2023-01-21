@@ -5,7 +5,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SearchIcon from '@mui/icons-material/Search';
 import flagIcon from '../../assets/images/misc/en.png';
-import paymentMethods from '../../assets/images/misc/payment.png';
 import './navbar.scss';
 
 function Navbar(){
@@ -22,30 +21,30 @@ function Navbar(){
                         <KeyboardArrowDownIcon />
                     </div>
                     <div className="item">
-                        <Link to='/products/1'>Women</Link>
+                        <Link className='link' to='/products/1'>Women</Link>
                     </div>
                     <div className="item">
-                        <Link to='/products/2'>Men</Link>
+                        <Link className='link' to='/products/2'>Men</Link>
                     </div>
                     <div className="item">
-                        <Link to='/products/3'>Children</Link>
+                        <Link className='link' to='/products/3'>Children</Link>
                     </div>
                 </div>
                 <div className="center">
-                    <Link to='/'>Lara Diaz</Link>
+                    <Link className='link' to='/'>Lara Diaz</Link>
                 </div>
                 <div className="right">
                     <div className="item">
-                        <Link to='/'>Homepage</Link>
+                        <Link className='link' to='/'>Homepage</Link>
                     </div>
                     <div className="item">
-                        <Link to='/'>About</Link>
+                        <Link className='link' to='/'>About</Link>
                     </div>
                     <div className="item">
-                        <Link to='/'>Contact</Link>
+                        <Link className='link' to='/'>Contact</Link>
                     </div>
                     <div className="item">
-                        <Link to='/'>Stores</Link>
+                        <Link className='link' to='/'>Stores</Link>
                     </div>
                     <div className="icons">
                         <SearchIcon />
