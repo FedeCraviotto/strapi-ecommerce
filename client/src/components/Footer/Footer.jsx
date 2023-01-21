@@ -16,10 +16,10 @@ function Footer(){
                 <div className="item">
                     <h1>Links</h1>
                     <span>FAQ</span>
-                    <span>Pages</span>
+                    <span>Refunds</span>
+                    <span>Cancellations</span>
                     <span>Stores</span>
-                    <span>Legals</span>
-                    <span>Cookies</span>
+                    <span>Jobs</span>
                 </div>
                 <div className="item">
                     <h3>About</h3>
