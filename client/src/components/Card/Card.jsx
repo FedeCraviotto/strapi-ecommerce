@@ -14,7 +14,7 @@ function Card({item}){
                 <h2>{item?.attributes.title}</h2>
                 <div className="prices">
                     <h3>${item?.attributes.price}</h3>
-                    <h3>${(item?.attributes.price * item?.attributes.discount).toFixed(2)}</h3>
+                    <h3>${(item?.attributes.price * (1 - item?.attributes.discount)).toFixed(2)}</h3>
                 </div>
             </div>
         </Link>
