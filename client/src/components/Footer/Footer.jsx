@@ -32,7 +32,7 @@ function Footer(){
             </div>
             <div className="bottom">
                 <div className="left">
-                    <span className="logo">Lara Diaz</span>
+                    <span className="logo">Clara Diaz</span>
                     <span className="copyright">® Copyright 2023. All rights reserved</span>
                 </div>
                 <div className="right">

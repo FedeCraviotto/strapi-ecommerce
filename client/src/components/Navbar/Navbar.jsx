@@ -1,28 +1,23 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SearchIcon from '@mui/icons-material/Search';
-import flagIcon from '../../assets/images/misc/en.png';
 import './navbar.scss';
 import Cart from "../Cart/Cart";
+import { useSelector } from "react-redux";
 
 function Navbar(){
 
     const [cartOpen,setCartOpen] = useState(false);
+    const products = useSelector(state=>state.cart.products);
 
     return(
         <div className="navbar">
             <div className="wrapper">
                 <div className="left">
                     <div className="item">
-                        <img src={flagIcon} alt="" />
-                        <KeyboardArrowDownIcon />
-                    </div>
-                    <div className="item">
-                        <span>USD</span>
-                        <KeyboardArrowDownIcon />
+                        <Link className='link' to='/'>Homepage</Link>
                     </div>
                     <div className="item">
                         <Link className='link' to='/products/1'>Women</Link>
@@ -35,12 +30,9 @@ function Navbar(){
                     </div>
                 </div>
                 <div className="center">
-                    <Link className='link' to='/'>Lara Diaz</Link>
+                    <Link className='link' to='/'>Clara Diaz</Link>
                 </div>
                 <div className="right">
-                    <div className="item">
-                        <Link className='link' to='/'>Homepage</Link>
-                    </div>
                     <div className="item">
                         <Link className='link' to='/'>About</Link>
                     </div>
@@ -55,7 +47,7 @@ function Navbar(){
                         <AccountBoxIcon />
                         <div className="cartIcon" onClick={(e)=> setCartOpen(!cartOpen)}>
                             <ShoppingCartIcon />
-                            <span>0</span>
+                            <span>{products.length}</span>
                         </div>
                     </div>
                 </div>

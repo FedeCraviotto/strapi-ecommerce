@@ -1,53 +1,58 @@
 import React from 'react';
 import './cart.scss';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { useSelector } from 'react-redux';
+import { removeItem, resetCart } from '../../redux/cartReducer'
+import { useDispatch } from 'react-redux';
+import { convertLength } from '@mui/material/styles/cssUtils';
+import {loadStripe} from '@stripe/stripe-js';
+import makeRequest from '../../makeRequest.js';
+
 
 function Cart(){
-    const data = [
-        {
-            id: 1,
-            img:'/featured/1.jpg',
-            img2: '/featured/1b.jpg',
-            title: 'Vestido blanco',
-            description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non sunt amet magnam similique reprehenderit dicta, et expedita, voluptate pariatur autem ab unde, tenetur sequi excepturi commodi ad voluptas dolorem molestias.',
-            isNew: false,
-            price: 20,
-            discount: 0.85
-        },
-        {
-            id: 2,
-            img:'/featured/2.jpg',
-            img2: '/featured/2b.jpg',
-            title: 'Short',
-            description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non sunt amet magnam similique...',
-            isNew: false,
-            price: 12,
-            discount: 0.90
-        },
-    ];
+    const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
+    const dispatch  = useDispatch()
+    const products = useSelector(state=>state.cart.products);
+    const totalPrice = ()=>{
+        let total = products.reduce((acum, item) => (acum += item.price * item.quantity),0);
+        return total.toFixed(2);
+    }
+
+    async function handlePayment(){
+        try {
+            const stripe = await stripePromise;
+            const res = await makeRequest.post('/orders', {products});
+            await stripe.redirectToCheckout({
+                sessionId: res.data.stripeSession.id,
+            })
+            //Recordar habilitar el 'create' desde Settings>API Tokens, logeado al admin de Strapi
+        } catch (error) {
+            convertLength(error);
+        }
+    }
 
     return(
         <div className="cart">
             <h2>Products in your cart</h2>
-            {data?.map((item)=>(
+            {products?.map((item)=>(
                 <div className="item" key={item.id}>
-                    <img src={item.img} alt="" />
+                    <img src={process.env.REACT_APP_UPLOADS + item.img} alt="" />
                     <div className="details">
                         <h3>{item.title}</h3>
-                        <p>{item.description?.substring(0, 100)}</p>
+                        <p>{item.description?.substring(0, 50)}</p>
                         <div className="price">
-                            1 x ${item.price * item.discount}
+                            {item.quantity} x ${item.price}
                         </div>
                     </div>
-                    <DeleteOutlinedIcon className='delete'/>
+                    <DeleteOutlinedIcon className='delete' onClick={()=>dispatch(removeItem(item.id))} />
                 </div>
             ))}
             <div className="total">
                 <span>SUBTOTAL</span>
-                <span>$500</span>
+                <span>${totalPrice()}</span>
             </div>
-            <button>CHECKOUT</button>
-            <span className="reset">Clear cart</span>
+            <button onClick={handlePayment} >CHECKOUT</button>
+            <span className="reset" onClick={()=>dispatch(resetCart())}>Clear cart</span>
         </div>
     );
 };
